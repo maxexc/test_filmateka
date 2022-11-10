@@ -1,0 +1,20 @@
+{{#each this}}
+  <li class='card' data-film='{{id}}' data-list="{{list}}" id="{{id}}">
+    <div class='card-top' data-film='{{id}}'>
+      <img
+        src='https://image.tmdb.org/t/p/w500{{poster_path}}'
+        alt='{{title}}'        
+        data-film='{{id}}'
+      />
+    </div>
+    <div class='card-box' data-film='{{id}}'>
+      <h3 class='card-title'data-film='{{id}}'>{{title}}</h3>
+      <div class='card-bottom' data-film='{{id}}'>
+        <p class='card-bottom-genres' data-film='{{id}}'>{{genre_ids}} |</p>
+        <span class='card-bottom-year' data-film='{{id}}'>{{release_date}}</span>
+      </div>
+    </div>
+    <span class='card-rating' data-film='{{id}}'>{{vote_average}}</span>
+    <div class="{{list}}" id="list{{id}}">{{list}}</div>
+  </li>
+{{/each}}

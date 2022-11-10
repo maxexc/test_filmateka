@@ -1,0 +1,6 @@
+.gallery {
+  padding: 20px 0 40px 0;
+  @include tablet {
+    padding: 60px 0;
+  }
+}
