@@ -138,17 +138,30 @@ async function onCardClick(event) {
   async function onPosterClick() {
     console.log("Это постер");
     try {
-      await filmApiTrendFetch.fetchTrailerMovie().then(data => {
+     filmApiTrendFetch.fetchTrailerMovie().then(data => {
         // const markup = hbsTest(data);
         console.log("Это трейлер:", data.results);
+        // const result = data.results;
+        // console.log(result)
+
 
         console.log(filmApiTrendFetch.movie_id);
-        result = data.results.map(item =>
+        const res = data.results;
+        console.log('Это res:', res[0].key);
+        // .map(item =>
           // `<li><iframe width="640" height="360" src="https://www.youtube.com/embed/L8yPTJ3asO8" title="YouTube video player" controls frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></li>`)
-          `<li><iframe width="640" height="360" src="https://www.youtube.com/embed/${item.key}" title="YouTube video player" controls frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></li>`)
-          console.log(result);
-        // trailerCard.innerHTML = '';
-         return trailerCard.insertAdjacentHTML('beforebegin', result);
+          // `<li><iframe width="640" height="360" src="https://www.youtube.com/watch/${item.key}" title="YouTube video player" controls frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></li>`)
+          
+          return trailerCard.innerHTML = `<iframe
+        id="player"
+        width="640"
+        height="360"
+        src="https://www.youtube.com/embed/${res[0].key}?autoplay=1"
+        frameborder="0"
+        allow="autoplay"
+        allowfullscreen
+      ></iframe>`;
+        //  return trailerCard.insertAdjacentHTML('beforebegin', res);
         // trailerCard.innerHTML = result;
       });
     } catch (error) {
