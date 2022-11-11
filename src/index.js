@@ -148,7 +148,7 @@ async function onCardClick(event) {
         console.log(filmApiTrendFetch.movie_id);
         const res = data.results;
         console.log('Это res:', res[0].key);
-        mark = res.map(item =>          
+        const mark = res.map(item =>          
           `<li><iframe width="640" height="360" src="https://www.youtube.com/embed/${item.key}" title="YouTube video player" controls frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></li>`)
             
           console.log(mark);
