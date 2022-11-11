@@ -150,7 +150,8 @@ async function onCardClick(event) {
         console.log('Это res:', res[0].key);
         mark = res.map(item =>          
           `<li><iframe width="640" height="360" src="https://www.youtube.com/embed/${item.key}" title="YouTube video player" controls frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></li>`)
-                 
+            
+          console.log(mark);
       //     return trailerCard.innerHTML = `<iframe
       //   id="player"
       //   width="640"
