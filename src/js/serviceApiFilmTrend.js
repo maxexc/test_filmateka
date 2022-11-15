@@ -1,22 +1,26 @@
 import { uid } from './cabinet';
 
-const GENRES_URL = 'https://api.themoviedb.org/3/genre/movie/list';
+export const GENRES_URL = 'https://api.themoviedb.org/3/genre/movie/list';
 const TRENDING_URL = 'https://api.themoviedb.org/3/trending/movie/day';
 const SEARCH_FILMS_URL = 'https://api.themoviedb.org/3/search/movie';
 const CARD_MOVIE = 'https://api.themoviedb.org/3/movie/';
 const TRAILER_MOVIE = 'https://api.themoviedb.org/3/movie/';
-const API_KEY = '2f44dbe234f7609a16da7327d83f3eb3';
+export const API_KEY = '2f44dbe234f7609a16da7327d83f3eb3';
+const UPCOMING_URL = 'https://api.themoviedb.org/3/movie/upcoming';
+
 const LOCAL_KEY_GENRES = 'genres';
+export const GENRES_ID_URL = 'https://api.themoviedb.org/3/discover/movie';
 
 export default class FilmApiTrendFetch {
   constructor() {
     this.query = '';
     this.page = 1;
-    this.currentLang = 'en-US';
+    this.currentLang;
     this.genres;
     this.films;
     this.movie_id;
     this.card;
+    this.curentGenre;
   }
 
   async fetchFilmsGenres() {
@@ -29,6 +33,18 @@ export default class FilmApiTrendFetch {
         localStorage.setItem(LOCAL_KEY_GENRES, JSON.stringify(this.genres));
 
         // return data.genres
+      })
+      .catch(err => console.log(err));
+  }
+  async fetchWithGenres() {
+    return await fetch(
+      `${GENRES_ID_URL}?api_key=${API_KEY}&with_genres=${this.curentGenre}&page=${this.page}`
+    )
+      .then(response => response.json())
+      .then(results => {
+        this.curentGenre = results.results;
+        let data = results.results;
+        return data;
       })
       .catch(err => console.log(err));
   }
@@ -46,7 +62,6 @@ export default class FilmApiTrendFetch {
   }
 
   async getListId(category, user) {
-    console.log(category, user);
     const requestOptions = {
       method: 'GET',
       redirect: 'follow',
@@ -63,6 +78,79 @@ export default class FilmApiTrendFetch {
         } else return result;
       })
       .catch(error => console.log('error', error));
+  }
+  async filmsAndGenresAndForGenre() {
+    try {
+      await this.fetchWithGenres();
+      await this.fetchFilmsGenres();
+      const films = this.curentGenre;
+      const genres = this.genres;
+      const watched = Object.keys(await this.getListId('watched', uid));
+      const favorite = Object.keys(await this.getListId('favorite', uid));
+
+      for (let film of films) {
+        film.genre_ids = searchGenres(film.genre_ids);
+        film.list = searchList(film.id, 'favorite', 'watched');
+
+        // форматуємо рейтинг
+        film.vote_average = film.vote_average.toFixed(1);
+        // форматуємо дату виходу фільму
+        film.release_date = film.release_date.slice(0, 4);
+        if (film.genre_ids.length === 0) {
+          switch (this.currentLang) {
+            case 'uk-UA':
+              film.genre_ids[0] = 'Жанри не вказані';
+              break;
+
+            case 'en-US':
+              film.genre_ids[0] = 'No movie genre';
+              break;
+          }
+        }
+        if (film.genre_ids.length >= 3) {
+          switch (this.currentLang) {
+            case 'uk-UA':
+              film.genre_ids[2] = 'Інші';
+              break;
+
+            case 'en-US':
+              film.genre_ids[2] = 'Other';
+              break;
+          }
+        }
+        film.genre_ids = film.genre_ids.slice(0, 3).join(', ');
+      }
+
+      function searchList(filmId, fav, watch) {
+        let list;
+
+        fav = favorite;
+        watch = watched;
+
+        if (fav.includes(filmId.toString())) {
+          list = 'favorite';
+        } else if (watch.includes(filmId.toString())) {
+          list = 'watched';
+        }
+
+        return list;
+      }
+
+      function searchGenres(ids) {
+        let genresNamesArr = [];
+        let searchId = ids;
+        let genreName;
+
+        for (let i = 0; i < ids.length; i += 1) {
+          genreName = genres.find(list => list.id === searchId[i]).name;
+          genresNamesArr.push(genreName);
+        }
+        return genresNamesArr;
+      }
+      return films;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async filmsAndGenres() {
@@ -174,25 +262,17 @@ export default class FilmApiTrendFetch {
         film.release_date = film.release_date.slice(0, 4);
         // форматуємо кількість жанрів фільму
         if (film.genre_ids.length === 0) {
-          switch (this.currentLang) {
-            case 'uk-UA':
-              film.genre_ids[0] = 'Жанри не вказані';
-              break;
-
-            case 'en-US':
-              film.genre_ids[0] = 'No movie genre';
-              break;
+          if (this.currentLang === 'uk-UA') {
+            film.genre_ids[0] = 'Жанри не вказані';
+          } else {
+            film.genre_ids[0] = 'No movie genre';
           }
         }
         if (film.genre_ids.length >= 3) {
-          switch (this.currentLang) {
-            case 'uk-UA':
-              film.genre_ids[2] = 'Інші';
-              break;
-
-            case 'en-US':
-              film.genre_ids[2] = 'Other';
-              break;
+          if (this.currentLang === 'uk-UA') {
+            film.genre_ids[2] = 'Інші';
+          } else {
+            film.genre_ids[2] = 'Other';
           }
         }
         film.genre_ids = film.genre_ids.slice(0, 3).join(', ');
@@ -264,7 +344,24 @@ export default class FilmApiTrendFetch {
     } catch (error) {
       console.log(error);
     }
+  }
 
+  async fetchUpcomingFilms() {
+    try {
+      return await fetch(
+        `${UPCOMING_URL}?api_key=${API_KEY}&language=${this.currentLang}`
+      )
+        .then(res => res.json())
+        .then(data => {
+          let currentPosters = [];
+          for (let i = 0; i <= 7; i += 1) {
+            currentPosters.push(data.results[i]);
+          }
+          return currentPosters;
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   get lang() {

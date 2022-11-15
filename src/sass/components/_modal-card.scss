@@ -63,6 +63,11 @@
     height: 658px;
     width: 882px;
   }
+  .dark-theme & {  
+    // background-color: rgb(133, 133, 133);
+    background-color: #484848;
+    color: rgb(216, 213, 213);
+  }
 }
 
 .modal-close-btn {
@@ -115,7 +120,7 @@
   width: 100%;
   max-height: 940px;
   max-width: 480px;
-  padding: 48px 20px;
+  padding: 20px 20px;
   padding-bottom: 40px;
   overflow: auto;
   border-radius: 5px;
@@ -125,6 +130,10 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 16px; 
+
+  @include mobile {
+    max-height: 100vh;
+  }
   
   @include tablet {
     flex-direction: row;
@@ -151,6 +160,17 @@
   h2 {
     display: block;
   }  
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 5px;
+  }
   }
 
   .modal-rendered {
@@ -170,6 +190,10 @@
     width: 240px;
     height: 357px;
     flex-shrink: 0;
+    background-image: url(../images/no-poster-available.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     position: relative;
     overflow: hidden;
     transition: transform 250ms;
@@ -239,6 +263,11 @@
     line-height: 35px;
     text-shadow: 0px 1px 3px rgba(77, 77, 77, 0.2),
     0px 1px 1px rgba(99, 99, 99, 0.14), 0px 2px 1px rgba(92, 92, 92, 0.2);
+    .dark-theme & {  
+    //   text-shadow: 0px 1px 3px rgba(204, 204, 204, 0.2),
+    // 0px 1px 1px rgba(252, 252, 252, 0.14), 0px 2px 1px rgba(219, 219, 219, 0.2);;
+      color: rgb(216, 213, 213);
+    }
   }
 }
 }
@@ -266,6 +295,21 @@
   border-radius: 5px;
 }
 
+.votes-count {
+  .dark-theme & { 
+    // color: var(--header-color-text);
+    padding: 0px 5px;
+    background: var(--accent-color);
+    border-radius: 5px; 
+    background-color: white;
+    color: #484848;
+
+    // color: rgb(216, 213, 213); 
+    border: 1px solid white;     
+  }
+  
+}
+
 .info-about {
   margin-bottom: 8px;
   text-transform: uppercase;
@@ -276,6 +320,9 @@
   overflow-y: auto;
   height: unset;
   
+  @include mobile {
+    max-height: 80px;
+  }
 
   @include tablet {
     max-height: 185px;
@@ -296,10 +343,18 @@
   }
 }
 
+.btn {
+  .dark-theme & {  
+    background-color: #484848;
+    color: rgb(216, 213, 213); 
+    border: 1px solid white;     
+  }
+}
+
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 15px;  
 
   button {
     width: 136px;
@@ -313,7 +368,7 @@
     &:hover, &:focus {
       background: var(--accent-color);
       border-color: var(--accent-color);
-      color: var(--header-color-text);
+      color: var(--header-color-text);      
     }
   }
 }

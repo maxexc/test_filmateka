@@ -27,25 +27,42 @@
   padding-top: 40px;
 }
 // -------------------------------------------------Контейнер-------
+.header {
+  position: relative;
+}
+
 .header__container {
-  text-align: center;
+  @include mobile {
+    text-align: left;
+  }
+  @include tablet {
+    text-align: center;
+  }
 }
 
 .header__wrap {
   display: flex;
-  position: relative;
   align-items: center;
   justify-content: space-between;
 }
 // --------------------------------------------------Логотип---------------
+.logo__wrap {
+  position: relative;
+  // align-items: center;
+}
+
 .logo-home__link {
   display: flex;
+  align-items: center;
   font-weight: 500;
   align-items: center;
   color: var(--header-color-text);
   font-family: 'Roboto';
   font-size: 23px;
   line-height: 1.16;
+  .dark-theme & {
+    color: black;
+  }
 }
 
 .header-home__logo {
@@ -53,7 +70,7 @@
 }
 
 .logo-home__text {
-  font-size: 20px;
+  font-size: 34px;
   display: none;
   @include tablet {
     display: block;
@@ -61,7 +78,7 @@
 }
 // ------------------------------------------------навигация------
 .nav__list {
-  display: flex;
+  display: none;
   @include tablet {
   }
 }
@@ -76,18 +93,44 @@
 }
 
 .nav__link {
+  @include mobile {
+    font-size: 10px;
+  }
+  @include tablet {
+    font-size: 12px;
+  }
   text-decoration: none;
   font-family: 'Roboto';
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.16;
   display: flex;
   text-transform: uppercase;
   color: var(--header-color-text);
+  .dark-theme & {
+    color: black;
+  }
 }
 // ----------------------------------------------форма поиска------------------------
+.search-form__container {
+  display: flex;
+  justify-content: center;
+}
+
 .search-form__wrap {
-  padding-top: 40px;
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  @include mobile {
+    padding-top: 70px;
+  }
+
+  @include tablet {
+    padding-top: 50px;
+  }
+  @include desktop {
+    padding-top: 40px;
+  }
 }
 
 .search-form__input {
@@ -100,13 +143,20 @@
   border-bottom: 0.5px solid var(--header-color-text);
   padding: 0 0 4px 1px;
   outline: none;
+  resize: none;
+  overflow: hidden;
+  transform: none;
+
   @include mobile {
-    width: 260px;
+    width: 200px;
   }
   @include tablet {
     width: 350px;
   }
   width: 380px;
+  .dark-theme & {
+    border-bottom: 1px solid var(--dark-mode-background-color);
+  }
 }
 
 .search-form__input::placeholder {
@@ -119,6 +169,12 @@
 }
 
 .search__button {
+  @include mobile {
+    margin-right: 10px;
+  }
+  @include tablet {
+    margin-right: 0px;
+  }
   padding: 0 0 4px 1px;
   bottom: 6px;
   border: none;
@@ -130,9 +186,110 @@
   cursor: pointer;
   transition: var(--transition-duration);
   transition-timing-function: var(--timing-function);
+
   &:hover,
   &:focus {
     stroke: var(--card-genres-year-text-color);
     transform: scale(1.2);
+  }
+}
+
+// <!---------------------------------------------------Кнопки вибору мови-------- -->
+
+.language-btn__list {
+  @include mobile {
+    margin-top: 10px;
+    margin-left: 0px;
+  }
+  @include tablet {
+    display: flex;
+    margin-left: 10px;
+  }
+  display: flex;
+  margin-left: 10px;
+}
+
+.language-btn__item:not(:first-child) {
+  margin-left: 4px;
+}
+
+.language-btn {
+  padding: 4px;
+  max-width: 75px;
+  display: inline-block;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background-color: transparent;
+  color: var(--header-color-text);
+  cursor: pointer;
+  border: 1px solid var(--header-color-text);
+  border-radius: 5px;
+  transition-property: background-color, border;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover,
+  &:focus {
+    background-color: var(--accent-color);
+  }
+  .dark-theme & {
+    // color: black;
+    border: 1px solid var(--dark-mode-background-color);
+  }
+}
+// <!-- ------------------------------------------------Блок користувача-->
+.username {
+  @include mobile {
+    top: 35px;
+    left: 0px;
+    // left: 0px;
+  }
+
+  @include tablet {
+    left: 60px;
+    // left: 0px;
+  }
+  @include desktop {
+    left: 60px;
+  }
+  // left: 60px;
+  display: block;
+  position: absolute;
+  font-family: inherit;
+  font-weight: bold;
+
+  padding: 3px 3px;
+  font-family: inherit;
+  color: var(--accent-color);
+  font-size: 16px;
+}
+
+// ----------------------------------------Вибір жанру та року----
+.choice-genre__wrap {
+  margin-top: 30px;
+}
+
+.choice-select {
+  font-family: inherit;
+  // color: var(--accent-color);
+  color: var(--header-color-text);
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid var(--header-color-text);
+  border-radius: 5px;
+  transform: none;
+  .dark-theme & {
+    // color: black;
+    border: 1px solid var(--dark-mode-background-color);
+  }
+}
+
+.choice-select option {
+  background-color: var(--accent-color);
+  .dark-theme & {
+    background-color: rgb(143, 66, 66);
   }
 }
