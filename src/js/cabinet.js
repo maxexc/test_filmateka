@@ -506,7 +506,7 @@ export function authStatus() {
       uid = user.uid;
       let auther;
       auther = user.auth
-      // auth.names = 12345;
+      auther.names = 'qwerty';
       document.querySelector('.usernames').textContent = auther.name;
       console.log(user);
       console.log(user.uid);
