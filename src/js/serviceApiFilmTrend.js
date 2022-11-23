@@ -10,6 +10,9 @@ const UPCOMING_URL = 'https://api.themoviedb.org/3/movie/upcoming';
 
 const LOCAL_KEY_GENRES = 'genres';
 export const GENRES_ID_URL = 'https://api.themoviedb.org/3/discover/movie';
+const saveLang = localStorage.getItem('lang');
+let currentLang;
+currentLang = saveLang;
 
 export default class FilmApiTrendFetch {
   constructor() {
@@ -24,6 +27,7 @@ export default class FilmApiTrendFetch {
   }
 
   async fetchFilmsGenres() {
+    // console.log("фильмы конструктор:",this.currentLang);
     return await fetch(
       `${GENRES_URL}?api_key=${API_KEY}&language=${this.currentLang}`
     )
@@ -37,6 +41,8 @@ export default class FilmApiTrendFetch {
       .catch(err => console.log(err));
   }
   async fetchWithGenres() {
+    // console.log("жанры конструктор:",this.currentLang);
+    // console.log("query конструктор:",this.query);
     return await fetch(
       `${GENRES_ID_URL}?api_key=${API_KEY}&with_genres=${this.curentGenre}&page=${this.page}`
     )
@@ -50,6 +56,7 @@ export default class FilmApiTrendFetch {
   }
 
   async fetchFilmsTrend() {
+    // console.log(localStorage);
     return await fetch(
       `${TRENDING_URL}?api_key=${API_KEY}&page=${this.page}&language=${this.currentLang}`
     )
@@ -353,11 +360,12 @@ export default class FilmApiTrendFetch {
       )
         .then(res => res.json())
         .then(data => {
-          let currentPosters = [];
-          for (let i = 0; i <= 7; i += 1) {
-            currentPosters.push(data.results[i]);
-          }
-          return currentPosters;
+          return data.results
+          // let currentPosters = [];
+          // for (let i = 0; i <= 7; i += 1) {
+          //   currentPosters.push(data.results[i]);
+          // }
+          // return currentPosters;
         });
     } catch (error) {
       console.log(error);

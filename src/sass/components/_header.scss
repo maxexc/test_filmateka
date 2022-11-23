@@ -122,7 +122,7 @@
   display: flex;
   align-items: baseline;
   @include mobile {
-    padding-top: 70px;
+    padding-top: 50px;
   }
 
   @include tablet {
@@ -289,6 +289,14 @@
 
 .choice-select option {
   background-color: var(--accent-color);
+  .dark-theme & {
+    background-color: rgb(143, 66, 66);
+  }
+}
+
+.active-btn {
+  background-color: var(--accent-color);
+  // color: black;
   .dark-theme & {
     background-color: rgb(143, 66, 66);
   }

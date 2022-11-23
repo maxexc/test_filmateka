@@ -23,6 +23,8 @@ import Notiflix from 'notiflix';
 import { spinnerOff, spinnerOn } from './js/preloader.js';
 import { GENRES_URL, API_KEY, GENRES_ID_URL } from './js/serviceApiFilmTrend';
 import { async } from 'regenerator-runtime';
+import Swiper from '../node_modules/swiper/swiper-bundle';
+// import Swiper from 'swiper/swiper-bundle';
 import './js/backButton.js';
 import './js/theme';
 
@@ -31,12 +33,15 @@ const gallery = document.querySelector('.card-list');
 const btnEn = document.querySelector('#en');
 const btnUk = document.querySelector('#uk');
 const searchForm = document.querySelector('#search-form');
-const upcomingList = document.querySelector('.coming-soon-list');
+const upcomingList = document.querySelector('.swiper-wrapper');
 let currentLang = 'en-US';
+const saveLang = localStorage.getItem('lang');
+currentLang = saveLang;
 
 window.addEventListener('load', onLoadPreloaderHide);
 
 const filmApiTrendFetch = new FilmApiTrendFetch();
+filmApiTrendFetch.currentLang = saveLang;
 
 searchForm.addEventListener('submit', function (evt) {
   onSubmitQuery(evt, filmApiTrendFetch);
@@ -45,11 +50,29 @@ searchForm.addEventListener('submit', function (evt) {
 // --------- При открытии сайта ---------------------
 
 if (document.title === 'Filmoteka') {
+  checkLanguage()
   fetchUpcomingFilms();
   fetchApiFilms();
   selectFilmsGenres();
   selectYears();
 } else getListById('favorite', uid);
+
+if (document.title === 'Library') {
+  checkLanguage()
+}
+
+// ------------Проверка статуса выбранного языка------
+
+function checkLanguage() {  
+  if (currentLang === 'uk-UA') {
+    document.querySelector('#uk').classList.add('active-btn');
+    document.querySelector('#en').classList.remove('active-btn');
+  } if (currentLang === 'en-US') {
+    document.querySelector('#en').classList.add('active-btn');
+    document.querySelector('#uk').classList.remove('active-btn'); 
+  }  else 
+  return;
+}
 
 // ------------Переключение языка--------------
 btnEn.addEventListener('click', onEnClick);
@@ -58,6 +81,11 @@ btnUk.addEventListener('click', onUkClick);
 async function onEnClick() {
   try {
     filmApiTrendFetch.currentLang = 'en-US';
+    // 
+    localStorage.setItem('lang', 'en-US');
+    console.log(localStorage);
+    location.reload();
+    //
     await fetchApiFilms();
   } catch (error) {
     onErrorEN();
@@ -67,6 +95,11 @@ async function onEnClick() {
 async function onUkClick() {
   try {
     filmApiTrendFetch.currentLang = 'uk-UA';
+    // 
+    localStorage.setItem('lang', 'uk-UA');
+    console.log(localStorage);   
+    location.reload();
+    //
     await fetchApiFilms();
   } catch (error) {
     onErrorUK();
@@ -82,24 +115,6 @@ function selectYears() {
         .getElementById('years')
         .insertAdjacentHTML('beforeend', `<option value="${i}">${i}</option>`);
     }
-  }
-}
-
-async function onEnClick() {
-  try {
-    filmApiTrendFetch.currentLang = 'en-US';
-    await fetchApiFilms();
-  } catch (error) {
-    onErrorEN();
-  }
-}
-
-async function onUkClick() {
-  try {
-    filmApiTrendFetch.currentLang = 'uk-UA';
-    await fetchApiFilms();
-  } catch (error) {
-    onErrorUK();
   }
 }
 
@@ -149,6 +164,8 @@ async function selectFilmsGenres() {
 }
 
 async function fetchFilmsGenres() {
+  // const saveLang = localStorage.getItem('lang');
+  // currentLang = saveLang;
   return await fetch(`${GENRES_URL}?api_key=${API_KEY}&language=${currentLang}`)
     .then(res => res.json())
     .then(data => {
@@ -290,8 +307,153 @@ async function fetchUpcomingFilms() {
   try {
     await filmApiTrendFetch.fetchUpcomingFilms().then(data => {
       const makrup = data;
+      // console.log(makrup)
       upcomingList.innerHTML = '';
-      upcomingList.insertAdjacentHTML('beforeend', card(makrup));
+      size=3;
+      let subarray = [];
+      for (let i = 0; i <Math.ceil(makrup.length/size); i++){
+        subarray[i] = data.slice((i*size), (i*size) + size);
+        upcomingList.insertAdjacentHTML('beforeend', card(subarray[i]));
+        // console.log(subarray)
+    }     
+      
+
+      const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        // direction: 'vertical',
+        loop: true,
+        loopedSlides: 3,
+        // freeMode: true,
+        slidesPerView: 3,
+        spaceBetween: 10,
+        // allowSlideNext: true,
+        // allowSlidePrev: true,
+        // allowTouchMove: true,
+        // centeredSlidesBounds: true,
+        centeredSlides: true,
+        slideToClickedSlide: true,
+        // observer: true,
+        // initialSlide: 2,
+        // slidesPerGroup: 3,
+        uniqueNavElements: true,
+        parallax: true,
+        parallax:  {
+          enabled: true,
+        },
+
+        // autoplay: {
+        //   delay: 3000,
+        //   stopOnLastSlide: true,
+        //   disableOnInteraction: false,
+        // },       
+    
+        // virtual: {
+        //     slides: ['Slide 1', 'Slide 2', 'Slide 3', 'Slide 4', 'Slide 5'],
+        //   },    
+    
+        speed: 400,
+        effect: 'cube',
+        // 'slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards'	
+        // slidesPerView: 3,
+        cubeEffect: {
+            slideShadows: false,
+            shadow: false,
+            shadowOffset: 20,
+            shadowScale: 0.94,        
+          },
+          a11y: {
+            enabled: true,
+            prevSlideMessage: 'Previous slide',
+            nextSlideMessage: 'Next slide',
+            firstSlideMessage: 'This is the first slide',
+            lastSlideMessage: 'This is the last slide',
+            paginationBulletMessage: 'Go to slide {{index}}',
+            notificationClass: 'swiper-notification',
+            containerMessage: '',
+            containerRoleDescriptionMessage: '',
+            itemRoleDescriptionMessage: '',
+          },
+      
+        // If we need pagination
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          // dynamicBullets: true,
+          renderBullet: function (index, className) {
+            return '<span class="' + className + '">' + (index+1) + '</span>';
+          },
+          // type: 'fraction',
+          // renderFraction: function (currentClass, totalClass) {
+          //   return 'Slide <span class="' + currentClass + '"></span>' +
+          //           ' from ' +  '<span class="' + totalClass + '"></span>';
+          // },
+          // type: 'progressbar',
+        },
+    
+        simulateTouch: true,
+        grabCursor: true,
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true,
+            pageUpDown: true,
+        },
+        mousewheel: {
+            sensitivity: 1,
+            eventsTarget: '.swiper-slide',
+        },
+      
+        // Navigation arrows
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      
+        // And if we need scrollbar
+        scrollbar: {
+          el: '.swiper-scrollbar',
+          draggable: true,
+        },
+    
+        // breakpoints: {
+            // 480: {
+            //     slidesPerView: 1,
+            //     spaceBetween: 10,
+            // },
+            // 850: {
+            //     slidesPerView: 3,
+            //     spaceBetween: 10,
+            // },
+            // 1024: {
+            //     slidesPerView: 3,
+            //     spaceBetween: 20,
+            // },
+        // }
+      });
+
+
+    //   const swiper = new Swiper('.swiper', {
+    //     // Optional parameters
+    //     loop: true,
+    //     slidesPerView: 7,
+    //     spaceBetween: 30,
+    //     // Navigation arrows
+    //     navigation: {
+    //       nextEl: '.swiper-button-next',
+    //       prevEl: '.swiper-button-prev',
+    //     },
+    //     keyboard: {
+    //       enabled: true,
+    //       onlyInViewport: false,
+    //     },
+    //     // pagination: {
+    //     //   el: '.swiper-pagination',
+    //     //   type: 'bullets',
+    //     // },
+    //     scrollbar: {
+    //       el: '.swiper-scrollbar',
+    //       draggable: true,
+    //     },
+    //   });
     });
   } catch (error) {
     onErrorEN();
@@ -314,14 +476,21 @@ async function onCardClick(event) {
     return;
   }
 
-  // async function noPosterCard() {
-  //    const noPosterCards = document.querySelector(
-  //     "img[class='movie-poster']"
-  //   );
-  //   for (const card of noPosterCards) {
-  //     card.className = 'visually-hidden';
-  //   }
-  // }
+  async function noPosterCard() {
+    try{
+     const noPosterCards = document.querySelectorAll(
+      "img[class='movie-poster']"
+    );
+    for (const card of noPosterCards) {
+      console.log(card.src)
+      if (card.src === 'https://image.tmdb.org/t/p/w500/') {        
+        card.className = 'visually-hidden';
+      } else return;
+    }
+  } catch (error) {
+    console.log(error);
+  } 
+  }
 
   filmApiTrendFetch.idFilm = event.target.getAttribute('data-film');
   const list = document.getElementById(filmApiTrendFetch.idFilm).dataset.list;
@@ -343,11 +512,11 @@ async function onCardClick(event) {
         console.log('в лист ' + list);
         const markup = hbsContainer(data);
         // console.log(data.overview);
-        console.log(data);
-        console.log(filmApiTrendFetch.movie_id);
+        // console.log(data);
+        // console.log(filmApiTrendFetch.movie_id);
         modalCard.innerHTML = '';
         modalCard.insertAdjacentHTML('beforeend', markup);
-        // noPosterCard();
+        noPosterCard();
         spinnerOff();
         if (uid === 'guest') {
           document.querySelector('.button-queue').disabled = 'true';
