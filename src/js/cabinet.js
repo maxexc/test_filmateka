@@ -507,11 +507,13 @@ export function authStatus() {
       let auther;
       auther = user.auth
       auther.names = 'qwerty';
-      document.querySelector('.usernames').textContent = auther.name;
       console.log(user);
       console.log(user.uid);
       console.log(auther.name);
       console.log(user.displayName);
+      document.querySelector('.usernames').textContent = auther.name;
+      
+      
 
       console.log('користувач ' + uid + user.displayName);
       return (
