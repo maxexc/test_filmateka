@@ -507,7 +507,7 @@ export function authStatus() {
       let names;
       names = user.name
       names = 12345;
-      // document.querySelector('.username').textContent = names;
+      // document.querySelector('.username').textContent = user.name;
       console.log(names);
 
       console.log('користувач ' + uid + user.displayName);
