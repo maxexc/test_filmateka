@@ -504,6 +504,7 @@ export function authStatus() {
   return onAuthStateChanged(auth, user => {    
       if (user) {
       uid = user.uid;
+      let names;
       names = user.name
       names = 12345;
       document.querySelector('.username').textContent = names;
