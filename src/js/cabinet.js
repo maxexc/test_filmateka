@@ -505,6 +505,7 @@ export function authStatus() {
     try {
       if (user) {
       uid = user.uid;
+      document.querySelector('.username').textContent = 'qwerty';
       document.querySelector('.username').textContent = user.name;
       console.log('користувач ' + uid + user.displayName);
       return (
