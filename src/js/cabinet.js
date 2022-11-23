@@ -504,16 +504,19 @@ export function authStatus() {
   return onAuthStateChanged(auth, user => {    
       if (user) {
       uid = user.uid;
-      let names;
-      names = user.name
-      names = 12345;
-      // document.querySelector('.username').textContent = user.name;
-      console.log(names);
+      // let names;
+      auther = user.auth
+      // auth.names = 12345;
+      document.querySelector('.usernames').textContent = auther.name;
+      console.log(user);
+      console.log(user.uid);
+      console.log(auther.name);
+      console.log(user.displayName);
 
       console.log('користувач ' + uid + user.displayName);
       return (
         uid,
-        (document.querySelector('.username').textContent = user.displayName)
+        (document.querySelector('.usernames').textContent = user.displayName)
       );
     } else {
       console.log('вхід не виконано');
@@ -544,7 +547,7 @@ function authFormSend(email, password) {
           break;
       }
 
-      // document.querySelector('.username').textContent = user.email;
+      // document.querySelector('.usernames').textContent = user.email;
       save(KEY_ID, userCredential.user.uid);
       document
         .querySelector('[data-authrization-modal]')
@@ -584,7 +587,7 @@ async function authFormReg(email, password, name) {
           );
           break;
       }
-      // document.querySelector('.username').textContent = user.email;
+      // document.querySelector('.usernames').textContent = user.email;
       save(KEY_ID, userCredential.user.uid);
       document.querySelector('[data-sign-in-modal]').classList.add('is-hidden');
       renderSingIn();
@@ -606,7 +609,7 @@ function authOut() {
   const auth = getAuth();
   signOut(auth)
     .then(() => {
-      // document.querySelector('.username').textContent = user.email;
+      // document.querySelector('.usernames').textContent = user.email;
 
       remove(KEY_ID);
       console.log('Вихід виконано');
