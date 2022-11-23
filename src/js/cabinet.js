@@ -506,19 +506,20 @@ export function authStatus() {
       uid = user.uid;
       let auther;
       auther = user.auth
-      auther.names = 'qwerty';
+      auther.name = 'qwerty';
       console.log(user);
       console.log(user.uid);
       console.log(auther.name);
       console.log(user.displayName);
+      // document.querySelector('.usernames').textContent = user.name;
       document.querySelector('.usernames').textContent = auther.name;
       
       
-
-      console.log('користувач ' + uid + user.displayName);
+      // console.log('користувач ' + uid + user.displayName);
+      console.log('користувач ' + uid + auther.name);
       return (
         uid,
-        (document.querySelector('.usernames').textContent = user.displayName)
+        (document.querySelector('.usernames').textContent = auther.name)
       );
     } else {
       console.log('вхід не виконано');
