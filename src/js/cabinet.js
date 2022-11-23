@@ -501,8 +501,7 @@ async function delItem(itemId, user, category) {
 
 export function authStatus() {
   const auth = getAuth();
-  return onAuthStateChanged(auth, user => {
-    try {
+  return onAuthStateChanged(auth, user => {    
       if (user) {
       uid = user.uid;
       document.querySelector('.username').textContent = 'qwerty';
@@ -517,9 +516,7 @@ export function authStatus() {
     } else {
       console.log('вхід не виконано');
       // ...
-    }} catch (error) {
-      console.log(error);
-    }
+    } 
   });
 }
 
