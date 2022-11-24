@@ -499,18 +499,23 @@ async function delItem(itemId, user, category) {
 
 //-------------------------Получение данных пользователя ---------------------------
 
+document.querySelector('.usernames').textContent = 1234;
+
 export function authStatus() {
   const auth = getAuth();
-  return onAuthStateChanged(auth, user => {    
+  return onAuthStateChanged(auth, async user => {    
       if (user) {
       uid = user.uid;
       let auther;
       auther = user.auth
-      auther.name = 'qwerty';
+      auther.name = 1234;
+
       console.log(user);
       console.log(user.uid);
+      console.log(typeof auther.name);
       console.log(auther.name);
       console.log(user.displayName);
+      console.log(document.querySelector('.usernames').textContent)
       // document.querySelector('.usernames').textContent = user.name;
       document.querySelector('.usernames').textContent = auther.name;
       
