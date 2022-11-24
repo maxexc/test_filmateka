@@ -515,16 +515,17 @@ export function authStatus() {
       console.log(typeof auther.name);
       console.log(auther.name);
       console.log(user.displayName);
-      console.log(document.querySelector('.usernames').textContent)
+      // console.log(document.querySelector('.usernames').textContent)
+
       // document.querySelector('.usernames').textContent = user.name;
-      document.querySelector('.usernames').textContent = auther.name;
+      // document.querySelector('.usernames').textContent = auther.name;
       
       
       // console.log('користувач ' + uid + user.displayName);
       console.log('користувач ' + uid + auther.name);
       return (
-        uid,
-        (document.querySelector('.usernames').textContent = auther.name)
+        uid
+        // (document.querySelector('.usernames').textContent = auther.name)
       );
     } else {
       console.log('вхід не виконано');
