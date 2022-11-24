@@ -39,7 +39,7 @@ currentLang = saveLang;
 export let uid;
 
 getUserId();
-authStatus();
+// authStatus();
 
 //---------------------------- Слушатели --------------------------------
 document.getElementById('header').addEventListener('submit', cabinetAction);
@@ -499,38 +499,21 @@ async function delItem(itemId, user, category) {
 
 //-------------------------Получение данных пользователя ---------------------------
 
-document.querySelector('.usernames').textContent = 1234;
-
 export function authStatus() {
   const auth = getAuth();
-  return onAuthStateChanged(auth, async user => {    
-      if (user) {
+  return onAuthStateChanged(auth, user => {
+    if (user) {
       uid = user.uid;
-      let auther;
-      auther = user.auth
-      auther.name = 1234;
-
-      console.log(user);
-      console.log(user.uid);
-      console.log(typeof auther.name);
-      console.log(auther.name);
-      console.log(user.displayName);
-      // console.log(document.querySelector('.usernames').textContent)
-
-      // document.querySelector('.usernames').textContent = user.name;
-      // document.querySelector('.usernames').textContent = auther.name;
-      
-      
-      // console.log('користувач ' + uid + user.displayName);
-      console.log('користувач ' + uid + auther.name);
+      document.querySelector('.username').textContent = user.name;
+      console.log('користувач ' + uid + user.displayName);
       return (
-        uid
-        // (document.querySelector('.usernames').textContent = auther.name)
+        uid,
+        (document.querySelector('.username').textContent = user.displayName)
       );
     } else {
       console.log('вхід не виконано');
       // ...
-    } 
+    }
   });
 }
 
@@ -556,7 +539,7 @@ function authFormSend(email, password) {
           break;
       }
 
-      // document.querySelector('.usernames').textContent = user.email;
+      // document.querySelector('.username').textContent = user.email;
       save(KEY_ID, userCredential.user.uid);
       document
         .querySelector('[data-authrization-modal]')
@@ -596,7 +579,7 @@ async function authFormReg(email, password, name) {
           );
           break;
       }
-      // document.querySelector('.usernames').textContent = user.email;
+      // document.querySelector('.username').textContent = user.email;
       save(KEY_ID, userCredential.user.uid);
       document.querySelector('[data-sign-in-modal]').classList.add('is-hidden');
       renderSingIn();
@@ -618,7 +601,7 @@ function authOut() {
   const auth = getAuth();
   signOut(auth)
     .then(() => {
-      // document.querySelector('.usernames').textContent = user.email;
+      document.querySelector('.username').textContent = user.email;
 
       remove(KEY_ID);
       console.log('Вихід виконано');
