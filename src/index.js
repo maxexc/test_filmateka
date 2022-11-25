@@ -23,8 +23,8 @@ import Notiflix from 'notiflix';
 import { spinnerOff, spinnerOn } from './js/preloader.js';
 import { GENRES_URL, API_KEY, GENRES_ID_URL } from './js/serviceApiFilmTrend';
 import { async } from 'regenerator-runtime';
-import Swiper from '../node_modules/swiper/swiper-bundle';
-// import Swiper from 'swiper/swiper-bundle';
+// import Swiper from '../node_modules/swiper/swiper-bundle';
+import Swiper from 'swiper/swiper-bundle';
 import './js/backButton.js';
 import './js/theme';
 
@@ -309,7 +309,14 @@ async function fetchUpcomingFilms() {
       const makrup = data;
       // console.log(makrup)
       upcomingList.innerHTML = '';
-      upcomingList.insertAdjacentHTML('beforeend', card(makrup));
+       size=3;
+      let subarray = [];
+      for (let i = 0; i <Math.ceil(makrup.length/size); i++){
+        subarray[i] = data.slice((i*size), (i*size) + size);
+       upcomingList.insertAdjacentHTML('beforeend', card(subarray[i]));
+        // console.log(subarray)
+    } 
+      // upcomingList.insertAdjacentHTML('beforeend', card(makrup));
 
       const swiper = new Swiper('.swiper', {
         // Optional parameters
