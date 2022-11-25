@@ -39,7 +39,7 @@ currentLang = saveLang;
 export let uid;
 
 getUserId();
-// authStatus();
+authStatus();
 
 //---------------------------- Слушатели --------------------------------
 document.getElementById('header').addEventListener('submit', cabinetAction);
