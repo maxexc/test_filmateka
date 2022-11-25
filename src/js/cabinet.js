@@ -39,7 +39,7 @@ currentLang = saveLang;
 export let uid;
 
 getUserId();
-authStatus();
+// authStatus();
 
 //---------------------------- Слушатели --------------------------------
 document.getElementById('header').addEventListener('submit', cabinetAction);
@@ -499,23 +499,23 @@ async function delItem(itemId, user, category) {
 
 //-------------------------Получение данных пользователя ---------------------------
 
-export function authStatus() {
-  const auth = getAuth();
-  return onAuthStateChanged(auth, user => {
-    if (user) {
-      uid = user.uid;
-      document.querySelector('.username').textContent = user.name;
-      console.log('користувач ' + uid + user.displayName);
-      return (
-        uid,
-        (document.querySelector('.username').textContent = user.displayName)
-      );
-    } else {
-      console.log('вхід не виконано');
-      // ...
-    }
-  });
-}
+// export function authStatus() {
+//   const auth = getAuth();
+//   return onAuthStateChanged(auth, user => {
+//     if (user) {
+//       uid = user.uid;
+//       document.querySelector('.username').textContent = user.name;
+//       console.log('користувач ' + uid + user.displayName);
+//       return (
+//         uid,
+//         (document.querySelector('.username').textContent = user.displayName)
+//       );
+//     } else {
+//       console.log('вхід не виконано');
+//       // ...
+//     }
+//   });
+// }
 
 //---------------------------Авторизация---------------------------
 
