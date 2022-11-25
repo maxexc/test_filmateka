@@ -313,7 +313,7 @@ async function fetchUpcomingFilms() {
       var subarray = [];
       var i;
       for (i = 0; i <Math.ceil(makrup.length/size); ++i){
-        subarray[i] = data.slice((i*size), (i*size) + size);
+        subarray[i] = makrup.slice((i*size), (i*size) + size);
         upcomingList.insertAdjacentHTML('beforeend', card(subarray[i]));
         // console.log(subarray)
     }  
