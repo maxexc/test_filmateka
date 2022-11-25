@@ -601,7 +601,7 @@ function authOut() {
   const auth = getAuth();
   signOut(auth)
     .then(() => {
-      document.querySelector('.username').textContent = user.email;
+      // document.querySelector('.username').textContent = user.email;
 
       remove(KEY_ID);
       console.log('Вихід виконано');
