@@ -309,14 +309,7 @@ async function fetchUpcomingFilms() {
       const makrup = data;
       // console.log(makrup)
       upcomingList.innerHTML = '';
-       size=3;
-      let subarray = [];
-      for (let i = 0; i <Math.ceil(makrup.length/size); i++){
-        subarray[i] = data.slice((i*size), (i*size) + size);
-        upcomingList.insertAdjacentHTML('beforeend', card(subarray[i]));
-        // console.log(subarray)
-    } 
-      // upcomingList.insertAdjacentHTML('beforeend', card(makrup));
+      upcomingList.insertAdjacentHTML('beforeend', card(makrup));
 
       const swiper = new Swiper('.swiper', {
         // Optional parameters
