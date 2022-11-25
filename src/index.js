@@ -307,32 +307,153 @@ async function fetchUpcomingFilms() {
   try {
     await filmApiTrendFetch.fetchUpcomingFilms().then(data => {
       const makrup = data;
+      // console.log(makrup)
       upcomingList.innerHTML = '';
-      upcomingList.insertAdjacentHTML('beforeend', card(makrup));
+       size=3;
+      let subarray = [];
+      for (let i = 0; i <Math.ceil(makrup.length/size); i++){
+        subarray[i] = data.slice((i*size), (i*size) + size);
+        upcomingList.insertAdjacentHTML('beforeend', card(subarray[i]));
+        // console.log(subarray)
+    } 
+      // upcomingList.insertAdjacentHTML('beforeend', card(makrup));
 
       const swiper = new Swiper('.swiper', {
         // Optional parameters
+        // direction: 'vertical',
         loop: true,
-        slidesPerView: 7,
-        spaceBetween: 30,
+        loopedSlides: 3,
+        // freeMode: true,
+        slidesPerView: 3,
+        spaceBetween: 10,
+        // allowSlideNext: true,
+        // allowSlidePrev: true,
+        // allowTouchMove: true,
+        // centeredSlidesBounds: true,
+        centeredSlides: true,
+        slideToClickedSlide: true,
+        // observer: true,
+        // initialSlide: 2,
+        // slidesPerGroup: 3,
+        uniqueNavElements: true,
+        parallax: true,
+        parallax:  {
+          enabled: true,
+        },
+
+        // autoplay: {
+        //   delay: 3000,
+        //   stopOnLastSlide: true,
+        //   disableOnInteraction: false,
+        // },       
+    
+        // virtual: {
+        //     slides: ['Slide 1', 'Slide 2', 'Slide 3', 'Slide 4', 'Slide 5'],
+        //   },    
+    
+        speed: 400,
+        effect: 'cube',
+        // 'slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards'	
+        // slidesPerView: 3,
+        cubeEffect: {
+            slideShadows: false,
+            shadow: false,
+            shadowOffset: 20,
+            shadowScale: 0.94,        
+          },
+          a11y: {
+            enabled: true,
+            prevSlideMessage: 'Previous slide',
+            nextSlideMessage: 'Next slide',
+            firstSlideMessage: 'This is the first slide',
+            lastSlideMessage: 'This is the last slide',
+            paginationBulletMessage: 'Go to slide {{index}}',
+            notificationClass: 'swiper-notification',
+            containerMessage: '',
+            containerRoleDescriptionMessage: '',
+            itemRoleDescriptionMessage: '',
+          },
+      
+        // If we need pagination
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          // dynamicBullets: true,
+          renderBullet: function (index, className) {
+            return '<span class="' + className + '">' + (index+1) + '</span>';
+          },
+          // type: 'fraction',
+          // renderFraction: function (currentClass, totalClass) {
+          //   return 'Slide <span class="' + currentClass + '"></span>' +
+          //           ' from ' +  '<span class="' + totalClass + '"></span>';
+          // },
+          // type: 'progressbar',
+        },
+    
+        simulateTouch: true,
+        grabCursor: true,
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true,
+            pageUpDown: true,
+        },
+        mousewheel: {
+            sensitivity: 1,
+            eventsTarget: '.swiper-slide',
+        },
+      
         // Navigation arrows
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         },
-        keyboard: {
-          enabled: true,
-          onlyInViewport: false,
-        },
-        // pagination: {
-        //   el: '.swiper-pagination',
-        //   type: 'bullets',
-        // },
+      
+        // And if we need scrollbar
         scrollbar: {
           el: '.swiper-scrollbar',
           draggable: true,
         },
+    
+        // breakpoints: {
+            // 480: {
+            //     slidesPerView: 1,
+            //     spaceBetween: 10,
+            // },
+            // 850: {
+            //     slidesPerView: 3,
+            //     spaceBetween: 10,
+            // },
+            // 1024: {
+            //     slidesPerView: 3,
+            //     spaceBetween: 20,
+            // },
+        // }
       });
+
+
+    //   const swiper = new Swiper('.swiper', {
+    //     // Optional parameters
+    //     loop: true,
+    //     slidesPerView: 7,
+    //     spaceBetween: 30,
+    //     // Navigation arrows
+    //     navigation: {
+    //       nextEl: '.swiper-button-next',
+    //       prevEl: '.swiper-button-prev',
+    //     },
+    //     keyboard: {
+    //       enabled: true,
+    //       onlyInViewport: false,
+    //     },
+    //     // pagination: {
+    //     //   el: '.swiper-pagination',
+    //     //   type: 'bullets',
+    //     // },
+    //     scrollbar: {
+    //       el: '.swiper-scrollbar',
+    //       draggable: true,
+    //     },
+    //   });
     });
   } catch (error) {
     onErrorEN();
