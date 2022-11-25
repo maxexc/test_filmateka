@@ -358,7 +358,7 @@ async function fetchUpcomingFilms() {
       });
     });
   } catch (error) {
-    onErrorEN();
+    console.log(error);
   }
 }
 
