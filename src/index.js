@@ -309,7 +309,7 @@ async function fetchUpcomingFilms() {
       const makrup = data;
       // console.log(makrup)
       upcomingList.innerHTML = '';
-      size=3;
+      var size=3;
       var subarray = [];
       var i;
       for (i = 0; i <Math.ceil(makrup.length/size); ++i){
