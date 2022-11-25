@@ -309,13 +309,35 @@ async function fetchUpcomingFilms() {
       const makrup = data;
       // console.log(makrup)
       upcomingList.innerHTML = '';
-      upcomingList.insertAdjacentHTML('beforeend', card(makrup));
+      size=3;
+      var subarray = [];
+      var i;
+      for (i = 0; i <Math.ceil(makrup.length/size); ++i){
+        subarray[i] = data.slice((i*size), (i*size) + size);
+        upcomingList.insertAdjacentHTML('beforeend', card(subarray[i]));
+        // console.log(subarray)
+    }  
+      // upcomingList.insertAdjacentHTML('beforeend', card(makrup));
 
       const swiper = new Swiper('.swiper', {
         // Optional parameters
         loop: true,
-        slidesPerView: 7,
+        slidesPerView: 3,
         spaceBetween: 30,
+        centeredSlides: true,
+        slideToClickedSlide: true,
+        parallax: true,
+
+        speed: 400,
+        effect: 'cube',
+        // 'slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards'	
+        // slidesPerView: 3,
+        cubeEffect: {
+            slideShadows: false,
+            shadow: false,
+            shadowOffset: 20,
+            shadowScale: 0.94,        
+          },
         // Navigation arrows
         navigation: {
           nextEl: '.swiper-button-next',
