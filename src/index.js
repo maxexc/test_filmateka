@@ -23,7 +23,8 @@ import Notiflix from 'notiflix';
 import { spinnerOff, spinnerOn } from './js/preloader.js';
 import { GENRES_URL, API_KEY, GENRES_ID_URL } from './js/serviceApiFilmTrend';
 import { async } from 'regenerator-runtime';
-import Swiper from 'swiper/swiper-bundle';
+import Swiper from '../node_modules/swiper/swiper-bundle';
+// import Swiper from 'swiper/swiper-bundle';
 import './js/backButton.js';
 import './js/theme';
 
