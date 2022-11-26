@@ -445,7 +445,7 @@ const trailerCard = document.querySelector('.modal-one-film__content');
 
 async function onCardClick(event) {
   spinnerOn();
-  console.log(event.target)
+  // console.log(event.target)
   if (!event.target.classList.contains('poster-js')) {
     spinnerOff();
     return;
