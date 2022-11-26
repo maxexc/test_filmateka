@@ -70,8 +70,14 @@
 .poster {
   width: 390px;
   border-radius: 6px;
+  @include mobile{
+    width: 100px;
+    height: 150px;
+  }  
   @include tablet{
-    max-height: 470px;
+    width: 229px;
+    height: 343px;
+    // max-height: 470px;
   }
   @include desktop{
     max-height: unset;

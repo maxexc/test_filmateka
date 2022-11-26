@@ -327,11 +327,18 @@ async function fetchUpcomingFilms() {
         // freeMode: true,
         slidesPerView: 3,
         spaceBetween: 30,
+        // allowSlideNext: true,
+        // allowSlidePrev: true,
+        // allowTouchMove: true,
+        // centeredSlidesBounds: true,
         centeredSlides: true,
         slideToClickedSlide: true,
-        // slidesPerGroup: 3,
+        slidesPerGroup: 3,
         uniqueNavElements: true,
         parallax: true,
+        // parallax:  {
+        //   enabled: true,
+        // },
 
         // autoplay: {
         //   delay: 3000,
@@ -368,8 +375,8 @@ async function fetchUpcomingFilms() {
         
         // If we need pagination
         pagination: {
-          el: '.swiper-pagination',
-          // clickable: true,
+          el: '.swiper-pagination',          
+          clickable: true,
           // dynamicBullets: true,
           renderBullet: function (index, className) {
             return '<span class="' + className + '">' + (index+1) + '</span>';
