@@ -33,7 +33,7 @@ Filmoteka is a collaborative team project focused on delivering an interactive m
    ```bash
    npm install
    ```
-3. Install dependencies:
+3. Run the project:
    ```bash
    npm start
    ```
